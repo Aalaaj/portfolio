@@ -3,8 +3,8 @@ import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-    site: 'https://your-username.github.io',
-    //base: '/portfolio',
+    site: 'https://Aalaaj.github.io',
+    base: '/portfolio',
     output: 'static',
     integrations: [
         mdx(),
