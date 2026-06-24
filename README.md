@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Astro Starter Kit: Minimal
 
 ```sh
@@ -41,3 +42,7 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+=======
+# portfolio
+## This is a Personal portfolio systems and website showcasing my development skills, projects, and contact info. Built with Laravel, Filament, and Oracle DB
+>>>>>>> 5c1c929cd6219041deb9c1d6446e9714f4f83e63
