@@ -1,13 +1,7 @@
 import { defineConfig } from 'astro/config';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
     site: 'https://Aalaaj.github.io',
-    base: '/portfolio',
+    base: '/portfolio',  // Your repository name
     output: 'static',
-    integrations: [
-        mdx(),
-        sitemap(),
-    ],
 });
