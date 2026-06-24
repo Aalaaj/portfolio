@@ -1,0 +1,386 @@
+---
+interface Props {
+    name: string;
+    title: string;
+    tagline: string;
+}
+
+const { name, title, tagline } = Astro.props;
+---
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="greeting mono animate-fade-in-up">👋 Hello, I'm</p>
+        <h1 class="animate-fade-in-up">{name}</h1>
+        <h2 class="animate-fade-in-up">
+            <span id="typed-text"></span>
+            <span class="cursor-blink">|</span>
+        </h2>
+        <p class="tagline animate-fade-in-up">{tagline}</p>
+        <div class="hero-actions animate-fade-in-up">
+            <a href="#projects" class="btn-primary">View My Work</a>
+            <a href="#contact" class="btn-secondary">Get In Touch</a>
+        </div>
+        <div class="scroll-indicator animate-fade-in-up">
+            <span>Scroll</span>
+            <div class="scroll-line">
+                <div class="scroll-dot"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✨ CODE SYMBOL SHAPES -->
+    <div class="hero-decoration animate-fade-in">
+        <div class="floating-shapes">
+            <div class="shape shape-1 code-symbol" data-symbol="&lt;/&gt;"></div>
+            <div class="shape shape-2 code-symbol" data-symbol="#"></div>
+            <div class="shape shape-3 code-symbol" data-symbol="{}"></div>
+            <div class="shape shape-4 code-symbol" data-symbol="!"></div>
+            <div class="shape shape-5 code-symbol" data-symbol="$"></div>
+            <div class="shape shape-6 code-symbol" data-symbol="()"></div>
+            <div class="shape shape-7 code-symbol" data-symbol="[]"></div>
+            <div class="shape shape-8 code-symbol" data-symbol="/* */"></div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6rem 0 4rem;
+        position: relative;
+        gap: 2rem;
+    }
+    
+    .hero-content {
+        flex: 1;
+        max-width: 600px;
+    }
+    
+    .greeting {
+        color: var(--accent);
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+    
+    .hero h1 {
+        font-size: clamp(3rem, 4vw, 4.5rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 0.2rem;
+        background: var(--gradient);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 200% auto;
+        animation: gradientShift 4s ease infinite;
+    }
+    
+    .hero h2 {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        font-weight: 500;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+        min-height: 2.5rem;
+    }
+    
+    .cursor-blink {
+        animation: blink 1s step-end infinite;
+        color: var(--accent);
+    }
+    
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    
+    .tagline {
+        font-size: 1.1rem;
+        color: var(--text-secondary);
+        max-width: 500px;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+    }
+    
+    .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 0.8rem 2rem;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        display: inline-block;
+    }
+    
+    .btn-primary {
+        background: var(--gradient);
+        color: #14121a;
+        box-shadow: 0 4px 20px var(--shadow);
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px var(--shadow-hover);
+    }
+    
+    .btn-secondary {
+        border: 2px solid var(--border);
+        color: var(--text-primary);
+    }
+    
+    .btn-secondary:hover {
+        border-color: var(--accent);
+        transform: translateY(-2px);
+    }
+    
+    .scroll-indicator {
+        display: flex;
+        flex-direction: column;
+        align-items: left;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        font-size: 1rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-top: 3rem;
+    }
+    
+    .scroll-line {
+        width: 1px;
+        height: 70px;
+        background: var(--border);
+        position: relative;
+    }
+    
+    .scroll-dot {
+        width: 4px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: scrollDot 2s ease-in-out infinite;
+        box-shadow: 0 0 10px rgba(255, 240, 131, 0.2);
+    }
+    
+    @keyframes scrollDot {
+        0% { top: 0; opacity: 1; }
+        100% { top: 100%; opacity: 0; }
+    }
+
+    /* ✨ CODE SYMBOL SHAPES */
+    .hero-decoration {
+        flex: 0 0 350px;
+        height: 350px;
+        position: relative;
+    }
+    
+    .floating-shapes {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    
+    .code-symbol {
+        position: absolute;
+        font-family: 'JetBrains Mono', monospace;
+        font-weight: 700;
+        color: var(--accent);
+        opacity: 0.15;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        animation: floatSymbol 8s ease-in-out infinite;
+        user-select: none;
+        pointer-events: none;
+        font-size: 2rem;
+        text-shadow: 0 0 30px rgba(255, 240, 131, 0.05);
+    }
+    
+    .code-symbol::before {
+        content: attr(data-symbol);
+    }
+    
+    .code-symbol:hover {
+        opacity: 0.5;
+        transform: scale(1.2) rotate(5deg);
+        text-shadow: 0 0 40px rgba(255, 240, 131, 0.3);
+    }
+    
+    /* Each symbol has a different size and position */
+    .shape-1 {
+        font-size: 3.5rem;
+        top: 5%;
+        left: 15%;
+        animation-delay: 0s;
+    }
+    
+    .shape-2 {
+        font-size: 2.8rem;
+        top: 60%;
+        left: 5%;
+        animation-delay: 1.2s;
+    }
+    
+    .shape-3 {
+        font-size: 2.2rem;
+        top: 20%;
+        right: 10%;
+        animation-delay: 2.5s;
+    }
+    
+    .shape-4 {
+        font-size: 3rem;
+        bottom: 15%;
+        right: 20%;
+        animation-delay: 0.8s;
+    }
+    
+    .shape-5 {
+        font-size: 2.5rem;
+        top: 45%;
+        left: 45%;
+        animation-delay: 1.8s;
+    }
+    
+    .shape-6 {
+        font-size: 1.8rem;
+        top: 10%;
+        right: 35%;
+        animation-delay: 3.2s;
+    }
+    
+    .shape-7 {
+        font-size: 2rem;
+        bottom: 40%;
+        left: 30%;
+        animation-delay: 0.5s;
+    }
+    
+    .shape-8 {
+        font-size: 1.6rem;
+        bottom: 5%;
+        right: 40%;
+        animation-delay: 2s;
+    }
+    
+    @keyframes floatSymbol {
+        0%, 100% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+        }
+        25% {
+            transform: translate(15px, -20px) rotate(3deg) scale(1.05);
+        }
+        50% {
+            transform: translate(-10px, 25px) rotate(-2deg) scale(0.95);
+        }
+        75% {
+            transform: translate(20px, 10px) rotate(4deg) scale(1.02);
+        }
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+        .hero-decoration {
+            flex: 0 0 250px;
+            height: 250px;
+        }
+        
+        .shape-1 { font-size: 2.8rem; }
+        .shape-2 { font-size: 2.2rem; }
+        .shape-3 { font-size: 1.8rem; }
+        .shape-4 { font-size: 2.4rem; }
+        .shape-5 { font-size: 2rem; }
+        .shape-6 { font-size: 1.5rem; }
+        .shape-7 { font-size: 1.6rem; }
+        .shape-8 { font-size: 1.3rem; }
+    }
+    
+    @media (max-width: 768px) {
+        .hero {
+            flex-direction: column;
+            text-align: center;
+            padding-top: 5rem;
+        }
+        
+        .hero-content {
+            max-width: 100%;
+        }
+        
+        .tagline {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .hero-actions {
+            justify-content: center;
+        }
+        
+        .hero-decoration {
+            flex: 0 0 200px;
+            height: 200px;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .shape-1 { font-size: 2.2rem; }
+        .shape-2 { font-size: 1.8rem; }
+        .shape-3 { font-size: 1.5rem; }
+        .shape-4 { font-size: 2rem; }
+        .shape-5 { font-size: 1.6rem; }
+        .shape-6 { font-size: 1.2rem; }
+        .shape-7 { font-size: 1.3rem; }
+        .shape-8 { font-size: 1rem; }
+    }
+</style>
+
+<script>
+    // @ts-nocheck
+    document.addEventListener('DOMContentLoaded', () => {
+        const titles = [
+            "Full Stack Developer",
+            "Creative Thinker", 
+            "Problem Solver",
+            "IT Leader"
+        ];
+        
+        let index = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedText = document.getElementById('typed-text');
+        
+        if (!typedText) return;
+
+        function typeEffect() {
+            const currentTitle = titles[index];
+            
+            if (!isDeleting) {
+                typedText.textContent = currentTitle.substring(0, charIndex + 1);
+                charIndex++;
+                
+                if (charIndex === currentTitle.length) {
+                    setTimeout(() => isDeleting = true, 2000);
+                }
+            } else {
+                typedText.textContent = currentTitle.substring(0, charIndex - 1);
+                charIndex--;
+                
+                if (charIndex === 0) {
+                    isDeleting = false;
+                    index = (index + 1) % titles.length;
+                }
+            }
+            
+            setTimeout(typeEffect, isDeleting ? 50 : 100);
+        }
+
+        typeEffect();
+    });
+</script>

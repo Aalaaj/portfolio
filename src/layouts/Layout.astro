@@ -1,0 +1,452 @@
+---
+export interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description = "My Portfolio" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Font Awesome -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+        />
+
+        <style is:global>
+            :root {
+                --bg-primary: #14121a;
+                --bg-secondary: #1c1924;
+                --bg-card: #201d2a;
+                --bg-card-hover: #28233a;
+                --text-primary: #dedede;
+                --text-secondary: #b8b0b8;
+                --text-muted: #8a8290;
+                --accent: #fff083;
+                --accent-hover: #f5d742;
+                --accent-dark: #e8c830;
+                --border: #2d2838;
+                --shadow: rgba(255, 240, 131, 0.08);
+                --shadow-hover: rgba(255, 240, 131, 0.15);
+                --gradient: linear-gradient(135deg, #fff083, #f5d742);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                background-color: var(--bg-primary);
+                color: var(--text-primary);
+                font-family:
+                    "Rubik",
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    "Segoe UI",
+                    Roboto,
+                    sans-serif;
+                font-display: swap;
+                line-height: 1.6;
+                overflow-x: hidden;
+                cursor: none;
+                position: relative;
+            }
+
+            .mono {
+                font-family: "JetBrains Mono", monospace;
+                font-display: swap;
+            }
+
+            /* ✨ GLOW CURSOR */
+            .cursor-glow {
+                position: fixed;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: radial-gradient(
+                    circle,
+                    rgba(255, 240, 131, 0.12),
+                    transparent 70%
+                );
+                pointer-events: none;
+                transform: translate(-50%, -50%);
+                z-index: 9998;
+                transition:
+                    width 0.4s ease,
+                    height 0.4s ease;
+                mix-blend-mode: screen;
+            }
+
+            .cursor-glow.hover {
+                width: 80px;
+                height: 80px;
+                background: radial-gradient(
+                    circle,
+                    rgba(255, 240, 131, 0.2),
+                    transparent 80%
+                );
+            }
+
+            /* ✨ RIPPLE CONTAINER */
+            .ripple-container {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+                overflow: hidden;
+            }
+
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                border: 2px solid rgba(255, 240, 131, 0.3);
+                transform: translate(-50%, -50%) scale(0);
+                animation: rippleExpand 2.5s ease-out forwards;
+                pointer-events: none;
+            }
+
+            @keyframes rippleExpand {
+                0% {
+                    transform: translate(-50%, -50%) scale(0);
+                    opacity: 0.9;
+                    border-width: 3px;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+                100% {
+                    transform: translate(-50%, -50%) scale(6);
+                    opacity: 0;
+                    border-width: 0.5px;
+                }
+            }
+
+            /* Animations */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes float {
+                0%,
+                100% {
+                    transform: translateY(0px);
+                }
+                50% {
+                    transform: translateY(-10px);
+                }
+            }
+
+            @keyframes gradientShift {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            @keyframes waveFlow {
+                0% {
+                    background-position: -200% 50%;
+                }
+                50% {
+                    background-position: 200% 50%;
+                }
+                100% {
+                    background-position: -200% 50%;
+                }
+            }
+
+            .animate-fade-in {
+                animation: fadeIn 0.8s ease-out forwards;
+            }
+
+            .animate-fade-in-up {
+                opacity: 0.7;
+                animation: fadeInUp 0.8s ease-out forwards;
+            }
+
+            .animate-fade-in-up:nth-child(1) {
+                animation-delay: 0.1s;
+            }
+            .animate-fade-in-up:nth-child(2) {
+                animation-delay: 0.2s;
+            }
+            .animate-fade-in-up:nth-child(3) {
+                animation-delay: 0.3s;
+            }
+            .animate-fade-in-up:nth-child(4) {
+                animation-delay: 0.4s;
+            }
+            .animate-fade-in-up:nth-child(5) {
+                animation-delay: 0.5s;
+            }
+
+            /* Section Label */
+            .section-label {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                margin-bottom: 2rem;
+                cursor: pointer;
+                position: relative;
+            }
+
+            .section-label h2 {
+                font-size: 1.8rem;
+                font-weight: 700;
+                background: var(--gradient);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-size: 200% auto;
+                animation: gradientShift 4s ease infinite;
+                transition: transform 0.3s ease;
+            }
+
+            .section-label .line {
+                flex: 1;
+                height: 2px;
+                background: linear-gradient(
+                    to right,
+                    transparent,
+                    var(--accent) 15%,
+                    var(--accent-hover) 30%,
+                    var(--accent) 45%,
+                    var(--accent-hover) 60%,
+                    var(--accent) 75%,
+                    transparent 90%
+                );
+                background-size: 300% 100%;
+                background-position: 0% 50%;
+                transition: all 0.4s ease;
+                position: relative;
+                border-radius: 2px;
+                opacity: 0.5;
+            }
+
+            .section-label:hover h2 {
+                transform: scale(1.02);
+            }
+
+            .section-label:hover .line {
+                opacity: 1;
+                height: 2px;
+                animation: waveFlow 5s ease-in-out infinite;
+                box-shadow: 0 0 25px rgba(255, 240, 131, 0.12);
+            }
+
+            .section-label:hover .line::after {
+                content: "";
+                position: absolute;
+                bottom: -4px;
+                left: 0;
+                width: 100%;
+                height: 12px;
+                background: radial-gradient(
+                    ellipse at center,
+                    rgba(255, 240, 131, 0.08),
+                    transparent 70%
+                );
+                filter: blur(4px);
+                animation: waveFlow 2.5s ease-in-out infinite;
+                pointer-events: none;
+            }
+
+            /* ✨ MAIN LAYOUT: Sidebar + Content */
+            .app-layout {
+                display: grid;
+                grid-template-columns: 320px 1fr;
+                min-height: 100vh;
+                max-width: 1200px;
+                margin: 0 auto;
+                gap: 0; /* ← Remove any gap */
+                background: var(--bg-primary);
+            }
+
+            .app-layout .sidebar-wrapper {
+                position: sticky;
+                top: 0;
+                height: 100vh;
+                overflow-y: auto;
+                border-right: 1px solid var(--border);
+                background: var(--bg-primary);
+                padding: 2rem 1.5rem;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+
+            .app-layout .main-content {
+                padding: 2rem 3rem 4rem 3rem;
+                max-width: 100%;
+                width: 100%;
+                overflow-y: auto;
+                background: var(--bg-primary);
+            }
+
+            @media (max-width: 768px) {
+                .app-layout {
+                    grid-template-columns: 1fr;
+                    gap: 0;
+                }
+
+                .app-layout .sidebar-wrapper {
+                    position: relative;
+                    height: auto;
+                    min-height: auto;
+                    border-right: none;
+                    border-bottom: 1px solid var(--border);
+                    padding: 1.5rem;
+                    justify-content: flex-start;
+                }
+
+                .app-layout .main-content {
+                    padding: 1.5rem;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Glow Cursor -->
+        <div class="cursor-glow" id="cursorGlow"></div>
+
+        <!-- Ripple Container -->
+        <div class="ripple-container" id="rippleContainer"></div>
+
+        <!-- Main Layout -->
+        <div class="app-layout">
+            <slot />
+        </div>
+    </body>
+
+    <script>
+        // @ts-nocheck
+        document.addEventListener("DOMContentLoaded", () => {
+            // ✨ GLOW CURSOR
+            const glow = document.getElementById("cursorGlow");
+            let mouseX = -100,
+                mouseY = -100;
+            let currentX = -100,
+                currentY = -100;
+
+            document.addEventListener("mousemove", (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateGlow() {
+                currentX += (mouseX - currentX) * 0.12;
+                currentY += (mouseY - currentY) * 0.12;
+                glow.style.left = currentX + "px";
+                glow.style.top = currentY + "px";
+                requestAnimationFrame(animateGlow);
+            }
+
+            animateGlow();
+
+            // Enlarge glow on hover
+            document
+                .querySelectorAll(
+                    "a, button, .project-card, .featured-card, .section-label, .btn-primary, .btn-secondary, .skill-tag",
+                )
+                .forEach((el) => {
+                    el.addEventListener("mouseenter", () =>
+                        glow.classList.add("hover"),
+                    );
+                    el.addEventListener("mouseleave", () =>
+                        glow.classList.remove("hover"),
+                    );
+                });
+
+            // ✨ RIPPLE EFFECT
+            const container = document.getElementById("rippleContainer");
+
+            function createRipple(x, y) {
+                const size = 30 + Math.random() * 40;
+                const ripple = document.createElement("div");
+                ripple.className = "ripple";
+                ripple.style.left = x + "px";
+                ripple.style.top = y + "px";
+                ripple.style.width = size + "px";
+                ripple.style.height = size + "px";
+                ripple.style.borderColor = `rgba(255, 240, 131, ${0.2 + Math.random() * 0.3})`;
+                container.appendChild(ripple);
+
+                setTimeout(() => {
+                    if (ripple.parentNode) ripple.remove();
+                }, 3000);
+            }
+
+            // Ripple on click
+            document.addEventListener("click", (e) => {
+                createRipple(e.clientX, e.clientY);
+            });
+
+            // Ripple from center of interactive elements
+            document
+                .querySelectorAll(
+                    "a, button, .project-card, .featured-card, .section-label, .btn-primary, .btn-secondary, .skill-tag",
+                )
+                .forEach((el) => {
+                    el.addEventListener("click", (e) => {
+                        const rect = el.getBoundingClientRect();
+                        createRipple(
+                            rect.left + rect.width / 2,
+                            rect.top + rect.height / 2,
+                        );
+                    });
+                });
+
+            // Disable on touch devices
+            if ("ontouchstart" in window) {
+                glow.style.display = "none";
+                container.style.display = "none";
+                document.body.style.cursor = "auto";
+            }
+        });
+    </script>
+</html>

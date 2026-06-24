@@ -1,0 +1,184 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<nav class="navbar animate-fade-in">
+    <div class="nav-content">
+        <a href="/" class="logo">
+            <span class="logo-text">&lt;/&gt;</span>
+            <span class="logo-name">YourName</span>
+        </a>
+        
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <!-- <li><a href="#education">Education</a></li> -->
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact" class="nav-cta">Contact</a></li>
+        </ul>
+        
+        <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<style>
+    .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: rgba(20, 18, 26, 0.9);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+        padding: 0.8rem 1.5rem;
+    }
+    
+    .nav-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 1.1rem;
+        color: var(--text-primary);
+        transition: color 0.3s ease;
+    }
+    
+    .logo:hover {
+        color: var(--accent);
+    }
+    
+    .logo-text {
+        color: var(--accent);
+        font-size: 1.3rem;
+    }
+    
+    .logo-name {
+        font-weight: 600;
+    }
+    
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2.5rem;
+        align-items: center;
+    }
+    
+    .nav-links a {
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        position: relative;
+    }
+    
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 0;
+        height: 1px;
+        background: var(--accent);
+        transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+    
+    .nav-links a:hover {
+        color: var(--text-primary);
+    }
+    
+    .nav-cta {
+        background: var(--gradient);
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        color: #14121a !important;
+        font-weight: 600 !important;
+        transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+    }
+    
+    .nav-cta::after {
+        display: none !important;
+    }
+    
+    .nav-cta:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px var(--shadow-hover);
+    }
+    
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+    }
+    
+    .menu-toggle span {
+        display: block;
+        width: 25px;
+        height: 2px;
+        background: var(--text-primary);
+        transition: all 0.3s ease;
+    }
+    
+    @media (max-width: 768px) {
+        .menu-toggle {
+            display: flex;
+        }
+        
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            flex-direction: column;
+            padding: 1.5rem;
+            gap: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .nav-links.open {
+            display: flex;
+        }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const toggle = document.getElementById('menuToggle');
+        const links = document.querySelector('.nav-links');
+        
+        if (toggle && links) {
+            toggle.addEventListener('click', () => {
+                links.classList.toggle('open');
+            });
+            
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    links.classList.remove('open');
+                });
+            });
+        }
+    });
+</script>

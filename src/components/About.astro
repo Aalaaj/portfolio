@@ -1,0 +1,90 @@
+---
+interface Props {
+    content: string[];
+    skills?: string[];
+}
+
+const { content, skills = [] } = Astro.props;
+---
+
+<section id="about" class="about section animate-fade-in-up">
+    <div class="section-label">
+        <h2>About Me</h2>
+        <div class="line"></div>
+    </div>
+    
+    <div class="about-content">
+        <div class="about-text">
+            {content.map((paragraph) => (
+                <p>{paragraph}</p>
+            ))}
+        </div>
+        
+        {skills.length > 0 && (
+            <div class="skills">
+                <h3>Skills & Technologies</h3>
+                <div class="skills-grid">
+                    {skills.map((skill) => (
+                        <span class="skill-tag">{skill}</span>
+                    ))}
+                </div>
+            </div>
+        )}
+    </div>
+</section>
+
+<style>
+    .about {
+        padding: 4rem 0;
+        scroll-margin-top: 80px;
+    }
+    
+    .about-content {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+    
+    .about-text p {
+        color: var(--text-secondary);
+        font-size: 1.05rem;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        max-width: 700px;
+    }
+    
+    .about-text strong {
+        color: var(--text-primary);
+        font-weight: 600;
+    }
+    
+    .skills h3 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+    
+    .skills-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+    }
+    
+    .skill-tag {
+        background: var(--bg-card);
+        color: var(--text-secondary);
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+    
+    .skill-tag:hover {
+        border-color: var(--accent);
+        color: var(--text-primary);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 20px var(--shadow);
+    }
+</style>

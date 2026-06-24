@@ -1,0 +1,215 @@
+---
+interface EducationItem {
+    institution: string;
+    degree: string;
+    field: string;
+    period: string;
+    description?: string;
+    achievements?: string[];
+}
+
+interface Props {
+    items: EducationItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<section id="education" class="education section animate-fade-in-up">
+    <div class="section-label">
+        <h2>Education</h2>
+        <div class="line"></div>
+    </div>
+
+    <div class="education-timeline">
+        {
+            items.map((item, index) => (
+                <div
+                    class="edu-item"
+                    style={`animation-delay: ${index * 0.15}s`}
+                >
+                    <div class="edu-marker">
+                        <div class="marker-dot" />
+                        {index < items.length - 1 && (
+                            <div class="marker-line" />
+                        )}
+                    </div>
+
+                    <div class="edu-content">
+                        <div class="edu-header">
+                            <h3>{item.institution}</h3>
+                            <span class="edu-period mono">{item.period}</span>
+                        </div>
+                        <p class="edu-degree">
+                            {item.degree} in {item.field}
+                        </p>
+
+                        {item.description && (
+                            <p class="edu-description">{item.description}</p>
+                        )}
+
+                        {item.achievements && item.achievements.length > 0 && (
+                            <ul class="edu-achievements">
+                                {item.achievements.map((achievement) => (
+                                    <li>
+                                        <span class="achievement-icon">✦</span>
+                                        {achievement}
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                    </div>
+                </div>
+            ))
+        }
+    </div>
+</section>
+
+<style>
+    .education {
+        padding: 4rem 0;
+        scroll-margin-top: 80px;
+    }
+
+    .education-timeline {
+        position: relative;
+        padding-left: 2rem;
+    }
+
+    .edu-item {
+        display: grid;
+        grid-template-columns: 30px 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2.5rem;
+        opacity: 0;
+        animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    .edu-marker {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .marker-dot {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--gradient);
+        border: 3px solid var(--bg-primary);
+        box-shadow: 0 0 20px var(--shadow);
+        flex-shrink: 0;
+        margin-top: 4px;
+        transition: transform 0.3s ease;
+    }
+
+    .edu-item:hover .marker-dot {
+        transform: scale(1.2);
+    }
+
+    .marker-line {
+        width: 2px;
+        flex: 1;
+        background: var(--border);
+        margin: 8px 0 4px;
+    }
+
+    .edu-item:last-child .marker-line {
+        display: none;
+    }
+
+    .edu-content {
+        background: var(--bg-card);
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        transition: all 0.3s ease;
+    }
+
+    .edu-content:hover {
+        border-color: var(--accent);
+        transform: translateX(8px);
+        box-shadow: 0 8px 30px var(--shadow);
+    }
+
+    .edu-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 0.3rem;
+    }
+
+    .edu-header h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+
+    .edu-period {
+        color: var(--accent);
+        font-size: 0.85rem;
+        background: var(--bg-primary);
+        padding: 0.2rem 0.8rem;
+        border-radius: 6px;
+        white-space: nowrap;
+    }
+
+    .edu-degree {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .edu-description {
+        color: var(--text-muted);
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 0.8rem;
+    }
+
+    .edu-achievements {
+        list-style: none;
+        padding: 0;
+        margin-top: 0.5rem;
+    }
+
+    .edu-achievements li {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.8rem;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        padding: 0.3rem 0;
+        line-height: 1.6;
+    }
+
+    .achievement-icon {
+        color: var(--accent);
+        font-size: 0.8rem;
+        margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+        .edu-item {
+            grid-template-columns: 20px 1fr;
+            gap: 1rem;
+        }
+
+        .edu-content {
+            padding: 1.2rem;
+        }
+
+        .edu-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .edu-content:hover {
+            transform: translateX(0);
+        }
+    }
+</style>

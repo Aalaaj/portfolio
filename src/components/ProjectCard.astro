@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+const { project } = Astro.props;
+---
+
+<div class="project-card">
+    {
+        project.data.image && (
+            <img
+                src={project.data.image}
+                alt={project.data.title}
+                class="project-image"
+            />
+        )
+    }
+
+    <h3>{project.data.title}</h3>
+
+    <p class="description">{project.data.description}</p>
+
+    <div class="tags">
+        {
+            project.data.technologies.map((tech: string) => (
+                <span class="tag">{tech}</span>
+            ))
+        }
+    </div>
+
+    <div class="links">
+        {
+            project.data.githubUrl && (
+                <a
+                    href={project.data.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <i class="fab fa-github" /> Code
+                </a>
+            )
+        }
+        {
+            project.data.liveUrl && (
+                <a
+                    href={project.data.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="live-link"
+                >
+                    <i class="fas fa-external-link-alt" /> Live
+                </a>
+            )
+        }
+    </div>
+</div>
+
+<style>
+    .project-card {
+        background: var(--light-navy);
+        padding: 1.5rem;
+        border-radius: 8px;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.3);
+    }
+
+    .project-image {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+
+    .project-card h3 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: var(--lightest-slate);
+        margin-bottom: 0.5rem;
+    }
+
+    .description {
+        color: var(--slate);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .tag {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.65rem;
+        color: var(--green);
+        background: var(--navy);
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+    }
+
+    .links {
+        display: flex;
+        gap: 1rem;
+        padding-top: 0.8rem;
+        border-top: 1px solid var(--lightest-navy);
+    }
+
+    .links a {
+        color: var(--slate);
+        font-size: 0.85rem;
+        transition: color 0.2s ease;
+    }
+
+    .links a:hover {
+        color: var(--green);
+    }
+
+    .live-link {
+        color: var(--green) !important;
+    }
+</style>
